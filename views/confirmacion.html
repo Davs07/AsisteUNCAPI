@@ -9,12 +9,11 @@
   </head>
   <body class="bg-green-100 flex justify-center items-center min-h-screen">
     <div class="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg text-center">
-      <h1 class="text-3xl font-bold text-green-700">
-        ¡Asistencia Registrada!
-      </h1>
+      <h1 class="text-3xl font-bold text-green-700">¡Asistencia Registrada!</h1>
       <p class="mt-4 text-gray-600">
         Tu asistencia ha sido registrada con éxito. Gracias por usar AsisteUNC.
       </p>
+      <p id="mensaje" class="text-gray-700 text-lg"></p>
 
       <div class="mt-6">
         <a
@@ -24,5 +23,15 @@
         </a>
       </div>
     </div>
+
+    <script>
+      // Obtener el ID desde la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const idRegistro = urlParams.get("id");
+
+      // Mostrar el mensaje personalizado en la página
+      const mensaje = document.getElementById("mensaje");
+      mensaje.textContent = `El ID registrado es: ${idRegistro}`;
+    </script>
   </body>
 </html>
