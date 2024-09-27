@@ -3,7 +3,7 @@ import sql from 'mssql';
 const sqlConfig = {
     user: 'sa',
     password: '1234',
-    database: 'MiBaseDeDatos',
+    database: 'BDEvents',
     server: 'localhost', // o la dirección de tu servidor de SQL Server
     pool: {
         max: 10,

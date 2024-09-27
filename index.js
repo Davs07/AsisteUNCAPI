@@ -23,7 +23,7 @@ app.get("/confirmacion", (req, res) => {
 });
 
 // Ruta para registrar la asistencia y mostrar HTML con mensaje de éxito
-app.get('/prueba/:id', async (req, res) => {
+app.get('/registrarasistencia/:id', async (req, res) => {
     const idRegistro = req.params.id;
 
     try {
@@ -50,19 +50,33 @@ app.post("/registrar-asistencia/:id", async (req, res) => {
   }
 });
 
-// Función simulada para registrar la asistencia (deberías conectarla a tu base de datos)
+
+// Función para registrar la asistencia
 async function registrarAsistencia(idRegistro) {
   try {
     // Conectarse a la base de datos
     const pool = await getConnection();
 
-    // Ejecutar la consulta o procedimiento almacenado
-    const result = await pool.request().input("RegistroId", idRegistro) // Pasar el id como parámetro
-      .query(`
-                INSERT INTO PruebaQR (RegistroId)
-                VALUES (@RegistroId)
-            `);
+    // Verificar si ya existe un registro de asistencia para este RegistroId
+    const checkResult = await pool.request()
+      .input("RegistroId", idRegistro)
+      .query(`SELECT COUNT(*) as count FROM Asistencias WHERE RegistroId = @RegistroId`);
 
+    const count = checkResult.recordset[0].count;
+
+    if (count > 0) {
+      throw new Error("La asistencia ya ha sido registrada previamente.");
+    }
+
+    // Si no existe, registrar la nueva asistencia
+    const result = await pool.request()
+    .input("RegistroId", idRegistro)
+    .query(`
+        BEGIN TRANSACTION;
+        INSERT INTO Asistencias (RegistroId) VALUES (@RegistroId);
+        UPDATE Registros SET Estado = 2 WHERE Id = @RegistroId;
+        COMMIT TRANSACTION;
+    `);
     console.log("Asistencia registrada:", result);
     return result;
   } catch (err) {
