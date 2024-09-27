@@ -16,11 +16,11 @@ Esta es una API desarrollada para el registro de asistencia de usuarios en event
 
 1. Clona este repositorio en tu máquina local:
    ```bash
-   git clone https://github.com/tu-usuario/asisteunc-api.git
+   git clone https://github.com/Davs07/AsisteUNCAPI.git
    ```
 2. Navega al directorio del proyecto:
    ```bash
-   cd asisteunc-api
+   cd AsisteUNCAPI
    ```
 3. Instala las dependencias necesarias:
    ```bash
