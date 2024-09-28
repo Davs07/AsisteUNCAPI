@@ -1,6 +1,6 @@
 # AsisteUNC - API de Registro de Asistencia
 
-Esta es una API desarrollada para el registro de asistencia de usuarios en eventos de la Universidad Nacional de Cajamarca, utilizando el software AsisteUNC. La aplicación permite a los usuarios registrar su asistencia a través de un ID proporcionado por un código QR o ingresado manualmente.
+Esta API es parte del proyecto AsisteUNC, desarrollado para el registro de asistencia de usuarios en eventos de la Universidad Nacional de Cajamarca. Permite a los usuarios registrar su asistencia a través de un ID proporcionado por un código QR o ingresado manualmente, integrándose con el software principal de AsisteUNC.
 
 ## Tabla de Contenidos
 
@@ -9,6 +9,7 @@ Esta es una API desarrollada para el registro de asistencia de usuarios en event
 - [Uso](#uso)
 - [Rutas de la API](#rutas-de-la-api)
 - [Tecnologías Utilizadas](#tecnologías-utilizadas)
+- [Integración con AsisteUNC](#integración-con-asisteunc)
 - [Contribuciones](#contribuciones)
 - [Licencia](#licencia)
 
@@ -29,13 +30,19 @@ Esta es una API desarrollada para el registro de asistencia de usuarios en event
 
 ## Configuración
 
-1. Asegúrate de tener configurada la base de datos de SQL Server y proporcionar la información de conexión en `db.js`.
+1. Asegúrate de tener configurada la base de datos de SQL Server y proporciona la información de conexión en `db.js`.
 
 2. Inicia la API ejecutando el siguiente comando:
    ```bash
    npm run dev
    ```
    La API se ejecutará en `http://localhost:3333`.
+
+3. Si desea exponer la API públicamente para su integración con la aplicación principal, utiliza **ngrok** para crear un túnel:
+   ```bash
+   ngrok http 3333
+   ```
+   Esto generará una URL pública que puedes usar para conectar la API con la aplicación principal AsisteUNC.
 
 ## Uso
 
@@ -46,6 +53,7 @@ Esta es una API desarrollada para el registro de asistencia de usuarios en event
 
 - `GET /`: Sirve la página principal del sistema de asistencia.
 - `GET /confirmacion`: Sirve la página de confirmación del registro de asistencia.
+- `GET /registrarasistencia/:id`: Redirige a la página de confirmación después de registrar la asistencia de un usuario utilizando su ID de registro.
 - `POST /registrar-asistencia/:id`: Permite registrar la asistencia de un usuario en un evento utilizando su ID de registro.
 
 ## Tecnologías Utilizadas
@@ -54,7 +62,18 @@ Esta es una API desarrollada para el registro de asistencia de usuarios en event
 - **Base de Datos**: SQL Server
 - **Frontend**: HTML, JavaScript
 - **Estilos**: Tailwind CSS (vía CDN)
-- **Otros**: CORS, MSSQL (para conexión a la base de datos)
+- **Otros**: CORS, MSSQL (para conexión a la base de datos), ngrok (para exponer la API públicamente)
+
+## Integración con AsisteUNC
+
+La API de AsisteUNC se integra con la aplicación principal de AsisteUNC para permitir un flujo de registro de asistencia interactivo. Para conectar esta API con la aplicación principal:
+
+1. Inicia la API localmente (`npm run dev`).
+2. Inicia ngrok para crear un túnel y obtener una URL pública:
+   ```bash
+   ngrok http 3333
+   ```
+3. Configura la aplicación principal de AsisteUNC para hacer solicitudes a la URL pública proporcionada por ngrok.
 
 ## Contribuciones
 
